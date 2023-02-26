@@ -51,7 +51,7 @@ async def play(ctx, url):
 
             async with ctx.typing():
                 filename = await YTDLSource.from_url(url, loop=bot.loop)
-                video_title = await YTDLSource.getTitle(url, loop=bot.loop)
+                video_title = await YTDLSource.get_title(url, loop=bot.loop)
                 voice_channel.play(discord.FFmpegOpusAudio(executable='ffmpeg', source=(os.getenv('file_path') + filename)))
             await ctx.send('**Now Playing:** {}'.format(video_title))
     else:
