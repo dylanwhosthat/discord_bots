@@ -5,6 +5,7 @@ import lxml
 from lxml import etree 
 import urllib.request
 
+# Supresses noise about console usage from errors
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 ytdl_format_options = {
@@ -34,9 +35,10 @@ class YTDLSource(discord.PCMVolumeTransformer):
         self.title = data.get('title')
         self.url= data.get('url')
 
+    # Downloads youtube link
     @classmethod
     async def from_url(cls, url, *, loop=None, stream=False):
-        loop = loop or asyncio.get_event_loop()
+        loop = loop or asyncio.get_event_loop() # Gets current event loop
         data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
         if 'entries'in data:
             data = data['entries'][0]
