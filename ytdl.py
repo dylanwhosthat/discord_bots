@@ -1,6 +1,9 @@
-import youtube_dl
+import yt_dlp as youtube_dl
 import asyncio
 import discord
+import lxml
+from lxml import etree 
+import urllib.request
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
@@ -38,4 +41,4 @@ class YTDLSource(discord.PCMVolumeTransformer):
         if 'entries'in data:
             data = data['entries'][0]
         filename = data['url'] if stream else ytdl.prepare_filename(data)
-        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+        return filename
